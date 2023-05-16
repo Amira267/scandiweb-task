@@ -8,13 +8,16 @@ use Core\ElegantModel;
 
 class Product extends ElegantModel
 {
+    protected $validator;
+    protected $table;
+    protected $errors;
 
-    public function __construct(
-        protected ProductsValidator $validator = new ProductsValidator(),
-        protected $table = 'products',
-        protected $errors = []
-    ) {
-    }
+    public function __construct( $table = 'products',  $errors = [] )
+        {
+         $this -> validator = new ProductsValidator();
+         $this -> table = $table;
+         $this -> errors = $errors;    
+        }
 
 
     public function save($request)

@@ -7,9 +7,11 @@ use Core\Helper;
 
 class ProductsController
 {
-
-    public function __construct( protected Helper $controlerHelper = new Helper())
-    {}
+    protected $helper ;
+    public function __construct()
+    {
+        $this -> helper = new Helper();
+    }
 
 
     
@@ -17,10 +19,10 @@ class ProductsController
     {
         $products = (new Product()) -> selectAll() ;
     
-        return $this -> controlerHelper -> view('index',
+        return $this -> helper -> view('index',
          [
             'products' => $products,
-            'helper' => $this->controlerHelper
+            'helper' => $this->helper
          ]);        
     }
 
@@ -29,15 +31,15 @@ class ProductsController
 
         $products = new Product();
         $products -> massDelete($_POST);
-        return $this -> controlerHelper->redirect('/');
+        return $this -> helper ->redirect('/');
     }
 
     public function add($data = [])
     {
 
-        $data['helper'] = $this -> controlerHelper;
+        $data['helper'] = $this -> helper;
 
-        return $this -> controlerHelper -> view('/add-product', $data); 
+        return $this -> helper -> view('/add-product', $data); 
     }
     
 
@@ -50,7 +52,7 @@ class ProductsController
 
             return $this -> add($popData);
         }
-        return $this -> controlerHelper -> redirect('/');
+        return $this -> helper -> redirect('/');
         
     }
 
